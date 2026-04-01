@@ -13,7 +13,7 @@ jobs:
       - name: Validate Branch name
         id: branch
         run: |
-          BRANCH="${{ github_refname}}"
+          BRANCH="${{ github.ref_name }}"
           if [[ ! "$BRANCH" =~ ^(feature|bugfix|release|hotfix)/[A-Z]+-[0-9]+-[a-z0-9-]+$ ]]; then
           echo "❌ Invalid branch name: $BRANCH"
             exit 1
