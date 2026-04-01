@@ -11,7 +11,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate Branch name
+        id: branch
         run: |
-          echo "Ref: ${{ github.ref }}"
-          echo "Ref_name: ${{ github.ref_name}}"
+          BRANCH="${{ github_refname}}"
+          if [[ ! "$BRANCH" =~ ^(feature|bugfix|release|hotfix)/[A-Z]+-[0-9]+-[a-z0-9-]+$ ]]; then
+          echo "❌ Invalid branch name: $BRANCH"
+            exit 1
+          fi
+          echo "BRANCH=$BRANCH" >> $GITHUB_OUTPUT
+      
+      - name: Get Story id
+        id: story
+        run: |
+          STORY_ID=$(echo "${{steps.branch.outputs.BRANCH}}" | grep -oP '[A-Z]+-\d+' | tr '[:upper:]' '[:lower:]')
+          echo "STORY_ID=$STORY_ID" >> $GITHUB_OUTPUT
+      
+      - name: Get tag
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
+    outputs:
+      branchName: ${{ steps.branch.outputs.BRANCH }}
+      storyId: ${{ steps.story.outputs.STORY_ID }}
+      tagName: ${{ steps.tag.outputs.TAG_NAME }}
