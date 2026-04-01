@@ -30,6 +30,12 @@ jobs:
         id: tag
         run: echo "TAG_NAME=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
+      - name: Print outputs
+        run: |
+          echo "Branch:   ${{ steps.branch.outputs.BRANCH }}"
+          echo "Story ID: ${{ steps.story.outputs.STORY_ID }}"
+          echo "Tag:      ${{ steps.tag.outputs.TAG_NAME }}"
+
     outputs:
       branchName: ${{ steps.branch.outputs.BRANCH }}
       storyId: ${{ steps.story.outputs.STORY_ID }}
