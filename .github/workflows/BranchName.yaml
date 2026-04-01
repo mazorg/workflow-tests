@@ -14,7 +14,7 @@ jobs:
         id: branch
         run: |
           BRANCH="${{ github.ref_name }}"
-          if [[ ! "$BRANCH" =~ ^(feature|bugfix|release|hotfix)\/([[:upper:]]+-\d+-[[:alnum:]-]+)$ ]]; then
+          if [[ ! "$BRANCH" =~ ^(feature|bugfix|release|hotfix)/([[:upper:]]+-\d+-[[:alnum:]-]+)$ ]]; then
           echo "❌ Invalid branch name: $BRANCH"
             exit 1
           fi
