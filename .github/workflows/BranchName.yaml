@@ -1,0 +1,17 @@
+name: Branch
+
+on: 
+  push:
+    branches-ignore:
+      - master
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Branch name
+        run: |
+          echo "Ref: ${{ github.ref }}"
+          echo "Ref_name: ${{ github.ref_name}}"
+
